@@ -7,7 +7,7 @@ plugins {
 
 
 android {
-    namespace = "com.plcoding.cryptotracker"
+    namespace = "com.azad.cryptotracker"
     compileSdk = 35
 
     defaultConfig {
