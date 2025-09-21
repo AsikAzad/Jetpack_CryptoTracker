@@ -36,7 +36,7 @@ android {
         debug{
             //URL specific to debug build
             buildConfigField("String", "BASE_URL", "\"https://api.coincap.io/v3/\"")
-            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("API_KEY", "7ce5af5bf097c0ba4ec5b9794e9785bf4e0116f3825249ca55f50236a6c3d11f")}\"")
+            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("API_KEY", "")}\"")
         }
 
         release {
@@ -48,7 +48,7 @@ android {
 
             //URL specific to release built
             buildConfigField("String", "BASE_URL", "\"https://api.coincap.io/v3/\"")
-            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("API_KEY", "7ce5af5bf097c0ba4ec5b9794e9785bf4e0116f3825249ca55f50236a6c3d11f")}\"")
+            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("API_KEY", "")}\"")
         }
     }
     compileOptions {
