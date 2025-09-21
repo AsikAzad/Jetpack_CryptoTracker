@@ -1,4 +1,4 @@
-package com.azad.cryptotracker.core.presentation.util
+package com.azad.cryptotracker.util
 
 import com.azad.cryptotracker.R
 

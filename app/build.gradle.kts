@@ -1,6 +1,3 @@
-import java.io.FileInputStream
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -8,21 +5,15 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-//To read API key from local.properties
-val localProperties = Properties()
-val localPropertiesFile = rootProject.file("local.properties")
-if (localPropertiesFile.exists()) {
-    localProperties.load(FileInputStream(localPropertiesFile))
-}
 
 android {
     namespace = "com.azad.cryptotracker"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.azad.cryptotracker"
+        applicationId = "com.plcoding.cryptotracker"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -33,22 +24,12 @@ android {
     }
 
     buildTypes {
-        debug{
-            //URL specific to debug build
-            buildConfigField("String", "BASE_URL", "\"https://api.coincap.io/v3/\"")
-            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("API_KEY", "7ce5af5bf097c0ba4ec5b9794e9785bf4e0116f3825249ca55f50236a6c3d11f")}\"")
-        }
-
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
-            //URL specific to release built
-            buildConfigField("String", "BASE_URL", "\"https://api.coincap.io/v3/\"")
-            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("API_KEY", "7ce5af5bf097c0ba4ec5b9794e9785bf4e0116f3825249ca55f50236a6c3d11f")}\"")
         }
     }
     compileOptions {
@@ -90,9 +71,4 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
-}
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
 }

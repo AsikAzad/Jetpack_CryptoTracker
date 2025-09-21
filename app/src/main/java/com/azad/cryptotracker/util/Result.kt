@@ -1,4 +1,4 @@
-package com.azad.cryptotracker.core.domain.util
+package com.azad.cryptotracker.util
 
 typealias DomainError = Error
 

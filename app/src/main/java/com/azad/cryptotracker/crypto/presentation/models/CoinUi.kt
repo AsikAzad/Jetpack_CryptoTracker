@@ -2,7 +2,7 @@ package com.azad.cryptotracker.crypto.presentation.models
 
 import androidx.annotation.DrawableRes
 import com.azad.cryptotracker.crypto.domain.Coin
-import com.azad.cryptotracker.core.presentation.util.getDrawableIdForCoin
+import com.azad.cryptotracker.util.getDrawableIdForCoin
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -43,7 +43,7 @@ fun Coin.toCoinUi(): CoinUi {
         name = name,
         symbol = symbol,
         rank = rank,
-        priceUsd = priceUsd.toDisplayableNumber(),
+        priceUsd = priceUsed.toDisplayableNumber(),
         marketCapUsd = marketCapUsd.toDisplayableNumber(),
         changePercent24Hr = changePercent24Hr.toDisplayableNumber(),
         iconRes = getDrawableIdForCoin(symbol)
