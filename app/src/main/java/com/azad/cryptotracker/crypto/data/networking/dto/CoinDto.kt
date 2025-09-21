@@ -1,7 +1,10 @@
-package com.azad.cryptotracker.crypto.domain
+package com.azad.cryptotracker.crypto.data.networking.dto
 
-//This is the business object
-data class Coin(
+import kotlinx.serialization.Serializable
+
+//Request response data model
+@Serializable
+data class CoinDto(
     val id: String,
     val rank: Int,
     val name: String,
