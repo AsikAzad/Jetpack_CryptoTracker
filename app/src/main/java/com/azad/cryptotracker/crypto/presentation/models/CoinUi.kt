@@ -3,6 +3,7 @@ package com.azad.cryptotracker.crypto.presentation.models
 import androidx.annotation.DrawableRes
 import com.azad.cryptotracker.crypto.domain.Coin
 import com.azad.cryptotracker.core.presentation.util.getDrawableIdForCoin
+import com.azad.cryptotracker.crypto.domain.calculateAbsoluteChange24Hr
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -15,6 +16,7 @@ data class CoinUi(
     val marketCapUsd: DisplayableNumber,
     val priceUsd: DisplayableNumber,
     val changePercent24Hr: DisplayableNumber,
+    val absoluteChange24Hr: DisplayableNumber,
     @DrawableRes val iconRes: Int
 )
 
@@ -46,6 +48,8 @@ fun Coin.toCoinUi(): CoinUi {
         priceUsd = priceUsd.toDisplayableNumber(),
         marketCapUsd = marketCapUsd.toDisplayableNumber(),
         changePercent24Hr = changePercent24Hr.toDisplayableNumber(),
+        absoluteChange24Hr = calculateAbsoluteChange24Hr().toDisplayableNumber(),
         iconRes = getDrawableIdForCoin(symbol)
     )
 }
+

@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.azad.cryptotracker.core.presentation.util.getThemeContentColor
 import com.azad.cryptotracker.crypto.domain.Coin
 import com.azad.cryptotracker.crypto.presentation.models.CoinUi
 import com.azad.cryptotracker.crypto.presentation.models.toCoinUi
@@ -34,12 +35,8 @@ fun CoinListItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ){
-    //Condition for content color
-    val contentColor = if (isSystemInDarkTheme()){
-        Color.White
-    }else{
-        Color.Black
-    }
+    //Theme content color
+    val contentColor = getThemeContentColor()
 
     //Creating a item container for the list items
     Row (
@@ -114,7 +111,7 @@ internal val previewCoin = Coin(
     symbol = "BTC",
     marketCapUsd = 1241273958896.75,
     priceUsd = 62828.15,
-    changePercent24Hr = -0.1
+    changePercent24Hr = 0.1
 ).toCoinUi()
 
 

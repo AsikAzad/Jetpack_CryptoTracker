@@ -22,6 +22,7 @@ import com.azad.cryptotracker.ui.theme.CryptoTrackerTheme
 @Composable
 fun CoinListScreen(
     state: CoinListState,
+    onAction: (CoinListAction) -> Unit,
     modifier: Modifier = Modifier
 ){
     if (state.isLoading){
@@ -44,7 +45,9 @@ fun CoinListScreen(
                 //Creating list item rows from provided data list
                 CoinListItem(
                     coinUi = coinUi,
-                    onClick = {/*TODO*/},
+                    onClick = {
+                        onAction(CoinListAction.OnCoinClick(coinUi))
+                    },
                     modifier = Modifier.fillMaxWidth()
                 )
                 //Adding a divider after each row
@@ -65,7 +68,8 @@ private fun CoinListScreenPreview(){
                     previewCoin.copy(id = it.toString())      //Providing unique id to the copy list
                 }
             ),
-            modifier = Modifier.background(MaterialTheme.colorScheme.background )
+            modifier = Modifier.background(MaterialTheme.colorScheme.background ),
+            onAction = {}
         )
     }
 }

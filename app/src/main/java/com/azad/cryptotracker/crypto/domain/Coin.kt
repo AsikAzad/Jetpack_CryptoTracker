@@ -10,3 +10,8 @@ data class Coin(
     val priceUsd: Double,
     val changePercent24Hr: Double
 )
+
+//To calculate absolute change in price
+fun Coin.calculateAbsoluteChange24Hr(): Double {
+    return this.priceUsd * (this.changePercent24Hr / 100)
+}
