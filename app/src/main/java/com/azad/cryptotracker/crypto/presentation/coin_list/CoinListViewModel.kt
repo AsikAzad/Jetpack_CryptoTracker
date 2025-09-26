@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.azad.cryptotracker.core.domain.util.onError
 import com.azad.cryptotracker.core.domain.util.onSuccess
 import com.azad.cryptotracker.crypto.domain.CoinDataSource
+import com.azad.cryptotracker.crypto.presentation.models.CoinUi
 import com.azad.cryptotracker.crypto.presentation.models.toCoinUi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.ZonedDateTime
 
 class CoinListViewModel(
     private val coinDataSource: CoinDataSource
@@ -39,15 +41,44 @@ class CoinListViewModel(
         when(action){
             is
             CoinListAction.OnCoinClick -> {
-                _state.update {
-                    it.copy(
-                        selectedCoin = action.coinUi
-                    )
-                }
+                selectCoin(action.coinUi)
             }
 //            CoinListAction.OnRefresh -> {
 //                loadCoins()
 //            }
+        }
+    }
+
+    //Function to select coin
+    private fun selectCoin(coinUi: CoinUi){
+        //Update the state with selected coin
+        _state.update {
+            it.copy(
+                selectedCoin = coinUi
+            )
+        }
+
+        //Make a network request to load coin history
+        viewModelScope.launch {
+            coinDataSource
+                .getCoinHistory(
+                    coinUi.id,
+                    ZonedDateTime.now().minusDays(5),   //Request 20 data as the data interval is 6hr
+                    ZonedDateTime.now()
+                )
+                .onSuccess { history ->
+                    println(history)
+                    //Here we will convert business object model to UI object model which is DataPoints object for graph
+                    //We will come bach here later
+//                    _state.update {
+//                        it.copy(
+//                            selectedCoinHistory = history
+//                        )
+//                    }
+                }
+                .onError { error ->
+                    _events.send(CoinListEvent.Error(error))
+                }
         }
     }
 

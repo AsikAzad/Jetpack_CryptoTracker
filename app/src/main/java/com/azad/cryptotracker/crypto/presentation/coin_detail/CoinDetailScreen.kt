@@ -125,6 +125,9 @@ fun CoinDetailScreen(
                     },
                     contentColor = contentColor
                 )
+
+                //Display the data graph here
+                //For now we are skipping this section, we will come back to later
             }
         }
     }

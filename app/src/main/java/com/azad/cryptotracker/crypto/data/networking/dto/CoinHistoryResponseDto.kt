@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 //Request response model returns a data field which contains the list of objects
 @Serializable
-data class CoinResponseDto(
-    val data: List<CoinDto>
+data class CoinHistoryResponseDto(
+    val data : List<CoinPriceDto>
 )
