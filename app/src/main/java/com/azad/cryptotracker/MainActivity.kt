@@ -1,25 +1,15 @@
 package com.azad.cryptotracker
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.azad.cryptotracker.core.presentation.util.ObserveAsEvents
-import com.azad.cryptotracker.core.presentation.util.toString
-import com.azad.cryptotracker.crypto.presentation.coin_detail.CoinDetailScreen
-import com.azad.cryptotracker.crypto.presentation.coin_list.CoinListEvent
-import com.azad.cryptotracker.crypto.presentation.coin_list.CoinListScreen
-import com.azad.cryptotracker.crypto.presentation.coin_list.CoinListViewModel
+import com.azad.cryptotracker.core.navigation.AdaptiveCoinListDetailPane
 import com.azad.cryptotracker.ui.theme.CryptoTrackerTheme
-import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,42 +18,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             CryptoTrackerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
-                    val viewModel = koinViewModel<CoinListViewModel>()
-                    val state by viewModel.state.collectAsStateWithLifecycle()
-
-
-                    //Here we handle observed events sent from viewmodel and show it to ui
-                    val context = LocalContext.current
-                    ObserveAsEvents(events = viewModel.events) { event ->
-                        when(event){
-                            is CoinListEvent.Error -> {
-
-                                //Show toast message to ui
-                                Toast.makeText(
-                                    context,
-                                    event.error.toString(context),
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        }
-                    }
-
-                    when{
-                        state.selectedCoin != null -> {
-                            CoinDetailScreen(
-                                state = state,
-                                modifier = Modifier.padding(innerPadding)
-                            )
-                        }else -> {
-                            CoinListScreen(
-                                state = state,
-                                modifier = Modifier.padding(innerPadding),
-                                onAction = viewModel::onAction
-                            )
-                        }
-                    }
-
+                    //This navigates one screen to another screen also it will show 2 screens to a single screen if device is in landscape mode
+                    AdaptiveCoinListDetailPane(
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }
